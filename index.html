@@ -1,13 +1,303 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/valentine-logo.svg"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Valentine Gift</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Viren, Will You Be My Valentine? ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        /* ===============================
+           GLOBAL STYLES
+        ================================ */
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffdde1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Fade-in Animation */
+        body {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ===============================
+           GLASS CARD
+        ================================ */
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            color: #fff;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.8rem;
+        }
+
+        .subtext {
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-size: 1.1rem;
+        }
+
+        /* ===============================
+           BUTTON STYLES
+        ================================ */
+        .btn-romantic {
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes {
+            background: #ff4e8d;
+            border: none;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 78, 141, 0.6);
+        }
+
+        .btn-no {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            position: relative;
+        }
+
+        .btn-no:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ===============================
+           FLOATING HEARTS
+        ================================ */
+        .heart {
+            position: absolute;
+            color: rgba(255,255,255,0.7);
+            animation: floatUp 8s linear infinite;
+            font-size: 20px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(1); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* ===============================
+           CONFETTI
+        ================================ */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* ===============================
+           CURSOR GLOW
+        ================================ */
+        .cursor-glow {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease;
+            z-index: 9999;
+        }
+
+        /* Success State */
+        .success {
+            animation: glowBg 1s infinite alternate;
+        }
+
+        @keyframes glowBg {
+            from { box-shadow: 0 0 30px #ff4e8d; }
+            to { box-shadow: 0 0 80px #ff4e8d; }
+        }
+
+        /* Responsive */
+        @media(max-width: 576px){
+            .glass-card{
+                padding:30px;
+            }
+            h1{
+                font-size:2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor-glow"></div>
+
+<!-- Floating Hearts -->
+<script>
+    for(let i=0;i<20;i++){
+        let heart = $('<div class="heart">❤️</div>');
+        heart.css({
+            left: Math.random()*100+'%',
+            animationDuration: (5+Math.random()*5)+'s',
+            fontSize: (15+Math.random()*25)+'px'
+        });
+        $('body').append(heart);
+    }
+</script>
+
+<div class="glass-card" id="card">
+    <h1>Viren, Will You Be My Valentine? ❤️</h1>
+    <p class="subtext" id="funnyText">I built this just for you...</p>
+    <div class="d-flex justify-content-center gap-4 flex-wrap mt-4">
+        <button class="btn btn-romantic btn-yes" id="yesBtn">Yes 💖</button>
+        <button class="btn btn-romantic btn-no" id="noBtn">No 😢</button>
+    </div>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" autoplay loop muted>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+$(document).ready(function(){
+
+    let noClicks = 0;
+    const messages = [
+        "Are you sure? 🥺",
+        "Think again ❤️",
+        "I wrote code for this 😭",
+        "Don’t break my heart 💔",
+        "Last chance 😤"
+    ];
+
+    // Cursor Glow
+    $(document).mousemove(function(e){
+        $('.cursor-glow').css({
+            left: e.pageX + 'px',
+            top: e.pageY + 'px'
+        });
+    });
+
+    // NO button behavior
+    // NO button behavior (Ultra Viral Mode 😈)
+    $('#noBtn').click(function(){
+
+        noClicks++;
+
+        // Funny dynamic messages
+        $('#funnyText').text(messages[noClicks % messages.length]);
+
+        // Make YES button grow dramatically
+        let scaleSize = 1 + (noClicks * 0.4);
+        $('#yesBtn').css({
+            transform: 'scale(' + scaleSize + ')',
+            transition: '0.3s ease'
+        });
+
+        // Move NO button randomly
+        let randomX = Math.random() * ($(window).width() - 120);
+        let randomY = Math.random() * ($(window).height() - 60);
+
+        $(this).css({
+            position: 'absolute'
+        }).animate({
+            left: randomX,
+            top: randomY
+        }, 250);
+
+        // After 5 clicks, chaos mode activated 😏
+        if(noClicks >= 5){
+            $('#funnyText').text("Okay okay fine 😭 You don't have a choice anymore!");
+
+            // Force Yes button to center & huge
+            $('#yesBtn').css({
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) scale(2.5)',
+                zIndex: 9999
+            });
+
+            // Disable NO button completely
+            $('#noBtn').fadeOut(300);
+
+            // Auto trigger YES after 1.5s (funny forced acceptance 😂)
+            setTimeout(function(){
+                $('#yesBtn').trigger('click');
+            }, 1500);
+        }
+
+    });
+
+    // YES button behavior
+    $('#yesBtn').click(function(){
+
+        $('#card').addClass('success');
+
+        $('#card').html(`
+            <h1>Yayyyy!!! 💕</h1>
+            <p class="subtext">You made my day!</p>
+            <div style="font-size:60px; animation:bounce 1s infinite;">❤️</div>
+        `);
+
+        // Confetti effect
+        for(let i=0;i<100;i++){
+            let confetti = $('<div class="confetti"></div>');
+            confetti.css({
+                left: Math.random()*100+'%',
+                background: 'hsl('+Math.random()*360+',100%,50%)'
+            });
+            $('body').append(confetti);
+
+            setTimeout(()=>{
+                confetti.remove();
+            },3000);
+        }
+
+        $('#bgMusic').prop("muted", false);
+    });
+
+});
+</script>
+
+</body>
 </html>
